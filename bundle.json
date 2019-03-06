@@ -1,0 +1,86 @@
+{
+    "name": "CNABDOCS",
+    "version": "0.3.0",
+    "description": "Display the embedded help from the bundles",
+    "invocationImages": [
+        {
+            "digest": "sha256:5f5cd072c4b4b785c462303995035c76371114d6c763d4474204e16ff8e52e32",
+            "imageType": "docker",
+            "image": "nunix/cnabdocs@sha256:5f5cd072c4b4b785c462303995035c76371114d6c763d4474204e16ff8e52e32"
+        }
+    ],
+    "images": null,
+    "parameters": {
+        "CNAB_DOCS_DEST": {
+            "type": "string",
+            "defaultValue": "cnabdocs:/opt",
+            "required": false,
+            "metadata": {},
+            "destination": {
+                "path": "",
+                "env": "CNAB_DOCS_DEST"
+            }
+        },
+        "CNAB_DOCS_NAME": {
+            "type": "string",
+            "defaultValue": "cnabdocs",
+            "required": false,
+            "metadata": {},
+            "destination": {
+                "path": "",
+                "env": "CNAB_DOCS_NAME"
+            }
+        },
+        "CNAB_DOCS_PORT": {
+            "type": "string",
+            "defaultValue": "port.server:8000",
+            "required": false,
+            "metadata": {},
+            "destination": {
+                "path": "",
+                "env": "CNAB_DOCS_PORT"
+            }
+        },
+        "CNAB_DOCS_SOURCE": {
+            "type": "string",
+            "defaultValue": "cnab/docs/index.md",
+            "required": false,
+            "metadata": {},
+            "destination": {
+                "path": "",
+                "env": "CNAB_DOCS_SOURCE"
+            }
+        },
+        "CNAB_DOCS_VOLUME_NAME": {
+            "type": "string",
+            "defaultValue": "volumes.data.name:cnabdocsvol",
+            "required": false,
+            "metadata": {},
+            "destination": {
+                "path": "",
+                "env": "CNAB_DOCS_VOLUME_NAME"
+            }
+        },
+        "DOCKER_APP_SOURCE": {
+            "type": "string",
+            "defaultValue": "/usr/bin/docker-app",
+            "required": false,
+            "metadata": {},
+            "destination": {
+                "path": "",
+                "env": "DOCKER_APP_SOURCE"
+            }
+        },
+        "DOCKER_SOURCE": {
+            "type": "string",
+            "defaultValue": "/usr/local/docker/docker",
+            "required": false,
+            "metadata": {},
+            "destination": {
+                "path": "",
+                "env": "DOCKER_SOURCE"
+            }
+        }
+    },
+    "credentials": {}
+}

@@ -1,0 +1,84 @@
+# This is the configuration for Porter
+# You must define steps for each action, but the rest is optional
+# Uncomment out the sections below to take full advantage of what Porter can do!
+
+mixins:
+  - exec
+
+name: CNABDOCS
+version: 0.3.0
+description: "Display the embedded help from the bundles"
+invocationImage: nunix/cnabdocs:porter
+
+parameters:
+  - name: DOCKER_SOURCE
+    type: string
+    default: "/usr/local/docker/docker"
+
+  - name: DOCKER_APP_SOURCE
+    type: string
+    default: "/usr/bin/docker-app"
+  
+  - name: CNAB_DOCS_NAME
+    type: string
+    default: cnabdocs
+  
+  - name: CNAB_DOCS_VOLUME_NAME
+    type: string
+    default: "volumes.data.name=cnabdocsvol"
+
+  - name: CNAB_DOCS_PORT
+    type: string
+    default: "port.server=8000"
+
+  - name: CNAB_DOCS_SOURCE
+    type: string
+    default: "cnab/docs/index.md"
+
+  - name: CNAB_DOCS_DEST
+    type: string
+    default: "cnabdocs:/opt"
+
+install:
+  - exec:
+      description: "===DOCS Server=== starts the rendering server"
+      command:
+        source: bundle.parameters.DOCKER_APP_SOURCE
+      arguments:
+        - install
+        - --name
+        - source: bundle.parameters.CNAB_DOCS_NAME
+        - --insecure
+        - --namespace
+        - nunix
+        - --target-context
+        - cnab
+        - --set
+        - source: bundle.parameters.CNAB_DOCS_VOLUME_NAME
+        - --set
+        - source: bundle.parameters.CNAB_DOCS_PORT
+
+upgrade:
+  - exec:
+      description: "===DOCS Content=== display the docs for this bundle"
+      command:
+        source: bundle.parameters.DOCKER_SOURCE
+      arguments:
+        - cp
+        - source: bundle.parameters.CNAB_DOCS_SOURCE
+        - source: bundle.parameters.CNAB_DOCS_DEST
+
+uninstall:
+  - exec:
+      description: "===DOCS Server=== starts the rendering server"
+      command:
+        source: bundle.parameters.DOCKER_APP_SOURCE
+      arguments:
+        - uninstall
+        - source: bundle.parameters.CNAB_DOCS_NAME
+        - --target-context
+        - cnab
+
+#credentials:
+#  - name: kubeconfig
+#    path: /root/.kube/config

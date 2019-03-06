@@ -1,0 +1,36 @@
+# This section contains your application metadata.
+# Version of the application
+version: 0.1.0
+# Name of the application
+name: cnabdocs
+# A short description of the application
+description: Bundle with a simple Markdown renderer
+# Namespace to use when pushing to a registry. This is typically your Hub username.
+namespace: nunix
+# List of application maintainers with name and email for each
+maintainers:
+  - name: nunix
+    email: nnd@ferring.com
+
+---
+# This section contains the Compose file that describes your application services.
+version: "3.6"
+services:
+  server:
+    image: aerth/markdownd
+    ports:
+      - ${port.server}:8080
+    volumes:
+      - type: volume
+        source: web
+        target: /opt
+volumes:
+  web:
+    name: ${volumes.data.name}
+---
+# This section contains the default values for your application parameters.
+port:
+  server: 8000
+volumes:
+  data:
+    name: content
