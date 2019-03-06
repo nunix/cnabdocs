@@ -17,6 +17,8 @@ PS> docker-app context create cnab --description "CNAB context" --default-stack-
 
 > For powershell context, we do not set a `docker-host` value as it will take by default the named pipe
 
+> **IMPORTANT**: if running `Docker for Windows`, you need to be in "Linux containers mode"
+
 ## Server bundle
 This bundle can be used with `docker-app` directly.
 The content needed is all located in the single file `cnabdocs.dockerapp`.
@@ -47,3 +49,29 @@ web:
 
 # Install the bundle inside the context created in the prerequisites
 $> docker-app install cnabdocs.dockerapp --name cnabdocs --target-context=cnab
+
+Creating network cnabdocs_default
+Creating service cnabdocs_server
+
+# Check that the application has been installed correctly
+$> docker-app status cnabdocs --target-context=cnab
+
+ID                  NAME                    MODE                REPLICAS            IMAGE                    PORTS
+tmq91ods5p2m        cnabdocs-Linux_server   replicated          1/1                 aerth/markdownd:latest   *:8000->8080/tcp
+
+# Open a browser to http://localhost:8000
+```
+
+## Cleaning resources
+The bundle and the volume created can be uninstalled/removed as follow:
+
+```
+# Uninstall the bundle
+$> docker-app uninstall cnabdocs --target-context=cnab
+
+Removing service cnabdocs_server
+Removing network cnabdocs_default
+
+# Remove the volume named "content"
+$> docker volume rm content
+```
