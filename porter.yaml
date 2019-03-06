@@ -70,7 +70,7 @@ upgrade:
 
 uninstall:
   - exec:
-      description: "===DOCS Server=== starts the rendering server"
+      description: "===DOCS Server=== stops and deletes the rendering server"
       command:
         source: bundle.parameters.DOCKER_APP_SOURCE
       arguments:
@@ -78,6 +78,14 @@ uninstall:
         - source: bundle.parameters.CNAB_DOCS_NAME
         - --target-context
         - cnab
+  - exec:
+      description: "===DOCS Content=== delete the volume"
+      command:
+        source: bundle.parameters.DOCKER_SOURCE
+      arguments:
+        - volume
+        - prune
+        - --force
 
 #credentials:
 #  - name: kubeconfig
